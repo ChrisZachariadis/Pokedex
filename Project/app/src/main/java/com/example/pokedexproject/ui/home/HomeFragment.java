@@ -103,24 +103,51 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     JsonObject details = JsonParser.parseString(response.body().string()).getAsJsonObject();
 
-                    // Get data from JSON
+                    // Extracting each required field
                     String frontImage = details.getAsJsonObject("sprites").get("front_default").getAsString();
+                    String backImage = details.getAsJsonObject("sprites").get("back_default").getAsString();
                     String type = details.getAsJsonArray("types").get(0).getAsJsonObject()
                             .getAsJsonObject("type").get("name").getAsString();
+                    int weight = details.get("weight").getAsInt();
+                    int height = details.get("height").getAsInt();
+                    int baseExperience = details.get("base_experience").getAsInt();
 
-                    // Create Pokémon object
-                    Pokemon pokemon = new Pokemon(name, type, frontImage);
-                    pokemonList.add(pokemon);  // Add to list for RecyclerView display
+                    // Parse abilities
+                    JsonArray abilitiesArray = details.getAsJsonArray("abilities");
+                    List<String> abilities = new ArrayList<>();
+                    for (int i = 0; i < abilitiesArray.size(); i++) {
+                        abilities.add(abilitiesArray.get(i).getAsJsonObject().getAsJsonObject("ability").get("name").getAsString());
+                    }
 
-                    // Save to Firestore
+                    // Parse held items
+                    JsonArray heldItemsArray = details.getAsJsonArray("held_items");
+                    List<String> heldItems = new ArrayList<>();
+                    for (int i = 0; i < heldItemsArray.size(); i++) {
+                        heldItems.add(heldItemsArray.get(i).getAsJsonObject().getAsJsonObject("item").get("name").getAsString());
+                    }
+
+                    // Parse moves
+                    JsonArray movesArray = details.getAsJsonArray("moves");
+                    List<String> moves = new ArrayList<>();
+                    for (int i = 0; i < movesArray.size(); i++) {
+                        moves.add(movesArray.get(i).getAsJsonObject().getAsJsonObject("move").get("name").getAsString());
+                    }
+
+                    // Create Pokémon object with all the details
+                    Pokemon pokemon = new Pokemon(name, type, abilities, weight, height, heldItems, moves,
+                            baseExperience, frontImage, backImage);
+
+                    // Add to list for display and save to Firestore
+                    pokemonList.add(pokemon);
                     savePokemonToFirestore(pokemon);
 
-                    // Update RecyclerView on main thread
+                    // Update RecyclerView on the main thread
                     getActivity().runOnUiThread(() -> pokemonAdapter.notifyDataSetChanged());
                 }
             }
         });
     }
+
 
     private void savePokemonToFirestore(Pokemon pokemon) {
         db.collection("pokemons").document(pokemon.getName())
@@ -128,6 +155,7 @@ public class HomeFragment extends Fragment {
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "Pokemon saved!"))
                 .addOnFailureListener(e -> Log.w("Firestore", "Error adding document", e));
     }
+
 
     @Override
     public void onDestroyView() {
