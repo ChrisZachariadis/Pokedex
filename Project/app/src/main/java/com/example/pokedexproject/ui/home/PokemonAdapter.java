@@ -68,4 +68,8 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             frontImageView = itemView.findViewById(R.id.imageViewPokemonFront);
         }
     }
+    public void updatePokemonList(List<Pokemon> newPokemonList) {
+        this.pokemonList = newPokemonList;
+        notifyDataSetChanged();
+    }
 }

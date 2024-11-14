@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.pokedexproject.R;
 import com.example.pokedexproject.databinding.FragmentHomeBinding;
 import com.example.pokedexproject.models.Pokemon;
+import com.example.pokedexproject.ui.shared.SharedViewModel;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -35,31 +36,34 @@ public class HomeFragment extends Fragment implements PokemonAdapter.OnPokemonCl
 
     private FragmentHomeBinding binding;
     private PokemonAdapter pokemonAdapter;
-    private HomeViewModel homeViewModel;
+    private SharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Initialize HomeViewModel
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-        // Observe the Pokémon list from HomeViewModel
-        homeViewModel.getPokemonListLiveData().observe(getViewLifecycleOwner(), pokemons -> {
-            pokemonAdapter = new PokemonAdapter(pokemons, this);
-            binding.recyclerViewPokemons.setAdapter(pokemonAdapter);
-        });
+        // Initialize SharedViewModel
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         setupRecyclerView();
+
+        // Observe the Pokémon list in SharedViewModel
+        sharedViewModel.getPokemonListLiveData().observe(getViewLifecycleOwner(), pokemons -> {
+            pokemonAdapter.updatePokemonList(pokemons); // Update adapter with new data
+        });
+
+        // Fetch Pokémon data
         fetchPokemons();
 
         return root;
     }
 
     private void setupRecyclerView() {
+        // Initialize adapter with an empty list and set the adapter once in setupRecyclerView
+        pokemonAdapter = new PokemonAdapter(new ArrayList<>(), this);
         binding.recyclerViewPokemons.setLayoutManager(new LinearLayoutManager(getContext()));
-        // The adapter will be set in the observer after receiving data
+        binding.recyclerViewPokemons.setAdapter(pokemonAdapter);
     }
 
     private void fetchPokemons() {
@@ -145,13 +149,13 @@ public class HomeFragment extends Fragment implements PokemonAdapter.OnPokemonCl
                     Pokemon pokemon = new Pokemon(name, type, abilities, weight, height, heldItems, moves,
                             baseExperience, frontImage, backImage);
 
-                    // Update the ViewModel with new Pokémon data
+                    // Add to the fetchedPokemons list
                     fetchedPokemons.add(pokemon);
 
-                    // Update ViewModel on the main thread after adding all details
-                    getActivity().runOnUiThread(() -> {
-                        homeViewModel.setPokemonList(fetchedPokemons);
-                    });
+                    // When all 10 details are fetched, update the SharedViewModel
+                    if (fetchedPokemons.size() == 10) {
+                        getActivity().runOnUiThread(() -> sharedViewModel.setPokemonList(fetchedPokemons));
+                    }
                 }
             }
         });

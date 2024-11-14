@@ -12,4 +12,8 @@
     <string name="menu_slideshow">Slideshow</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="download_all_pokemons">Download all Pokemons</string>
+    <string name="delete_all_pokemons">Delete All pokemons</string>
+    <string name="snorlax_image_placeholder">Snorlax image placeholder</string>
+    <string name="download_pokemons_in_firestore">Download Pokemons in Firestore</string>
 </resources>

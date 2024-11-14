@@ -1,5 +1,6 @@
 package com.example.pokedexproject.ui.shared;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -12,15 +13,22 @@ public class SharedViewModel extends ViewModel {
 
     private final MutableLiveData<List<Pokemon>> pokemonListLiveData = new MutableLiveData<>(new ArrayList<>());
 
-    public MutableLiveData<List<Pokemon>> getPokemonListLiveData() {
+    // Expose the LiveData for observing
+    public LiveData<List<Pokemon>> getPokemonListLiveData() {
         return pokemonListLiveData;
     }
 
+    // Method to add a single Pokémon to the list
     public void addPokemon(Pokemon pokemon) {
         List<Pokemon> currentList = pokemonListLiveData.getValue();
         if (currentList != null) {
             currentList.add(pokemon);
-            pokemonListLiveData.postValue(currentList);
+            pokemonListLiveData.postValue(currentList); // Update LiveData
         }
+    }
+
+    // Method to set the entire list of Pokémon at once
+    public void setPokemonList(List<Pokemon> pokemonList) {
+        pokemonListLiveData.postValue(pokemonList);
     }
 }
