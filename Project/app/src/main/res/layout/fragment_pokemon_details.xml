@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollViewPokemonDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPokemonDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Pokémon Name -->
+        <TextView
+            android:id="@+id/textViewPokemonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Pokémon Type -->
+        <TextView
+            android:id="@+id/textViewPokemonType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type" />
+
+        <!-- Pokémon Weight -->
+        <TextView
+            android:id="@+id/textViewPokemonWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight" />
+
+        <!-- Pokémon Height -->
+        <TextView
+            android:id="@+id/textViewPokemonHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Height" />
+
+        <!-- Base Experience -->
+        <TextView
+            android:id="@+id/textViewPokemonBaseExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Base Experience" />
+
+        <!-- Front Image -->
+        <ImageView
+            android:id="@+id/imageViewPokemonFront"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+        <!-- Back Image -->
+        <ImageView
+            android:id="@+id/imageViewPokemonBack"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

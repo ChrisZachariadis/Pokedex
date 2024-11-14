@@ -1,8 +1,10 @@
 package com.example.pokedexproject.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Pokemon {
+// All the pokemon information
+public class Pokemon implements Serializable {
     private String name;
     private String type;
     private List<String> abilities;
@@ -30,7 +32,7 @@ public class Pokemon {
         this.imageBack = imageBack;
     }
 
-    // Getters for Firestore
+    // Getters
     public String getName() { return name; }
     public String getType() { return type; }
     public List<String> getAbilities() { return abilities; }

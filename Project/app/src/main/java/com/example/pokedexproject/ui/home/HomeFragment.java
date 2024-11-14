@@ -9,18 +9,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.pokedexproject.R;
 import com.example.pokedexproject.databinding.FragmentHomeBinding;
 import com.example.pokedexproject.models.Pokemon;
-import com.example.pokedexproject.ui.shared.SharedViewModel;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.jetbrains.annotations.NotNull;
-//import androidx.lifecycle.ViewModelProvider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,29 +31,24 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements PokemonAdapter.OnPokemonClickListener {
 
     private FragmentHomeBinding binding;
-    private List<Pokemon> pokemonList = new ArrayList<>();
     private PokemonAdapter pokemonAdapter;
-    private FirebaseFirestore db;
-    private SharedViewModel sharedViewModel;
-
+    private HomeViewModel homeViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Initialize SharedViewModel
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        // Initialize HomeViewModel
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        // Observe the shared Pokémon list
-        sharedViewModel.getPokemonListLiveData().observe(getViewLifecycleOwner(), pokemons -> {
-            // Update your local list and notify adapter
-            pokemonList.clear();
-            pokemonList.addAll(pokemons);
-            pokemonAdapter.notifyDataSetChanged();
+        // Observe the Pokémon list from HomeViewModel
+        homeViewModel.getPokemonListLiveData().observe(getViewLifecycleOwner(), pokemons -> {
+            pokemonAdapter = new PokemonAdapter(pokemons, this);
+            binding.recyclerViewPokemons.setAdapter(pokemonAdapter);
         });
 
         setupRecyclerView();
@@ -64,9 +58,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        pokemonAdapter = new PokemonAdapter(pokemonList);
         binding.recyclerViewPokemons.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerViewPokemons.setAdapter(pokemonAdapter);
+        // The adapter will be set in the observer after receiving data
     }
 
     private void fetchPokemons() {
@@ -90,19 +83,20 @@ public class HomeFragment extends Fragment {
                     JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
                     JsonArray results = jsonObject.getAsJsonArray("results");
 
+                    List<Pokemon> fetchedPokemons = new ArrayList<>();
                     for (int i = 0; i < results.size(); i++) {
                         JsonObject pokemonObject = results.get(i).getAsJsonObject();
                         String name = pokemonObject.get("name").getAsString();
                         String url = pokemonObject.get("url").getAsString();
 
-                        fetchPokemonDetails(name, url);
+                        fetchPokemonDetails(name, url, fetchedPokemons);
                     }
                 }
             }
         });
     }
 
-    private void fetchPokemonDetails(String name, String url) {
+    private void fetchPokemonDetails(String name, String url, List<Pokemon> fetchedPokemons) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
 
@@ -151,30 +145,28 @@ public class HomeFragment extends Fragment {
                     Pokemon pokemon = new Pokemon(name, type, abilities, weight, height, heldItems, moves,
                             baseExperience, frontImage, backImage);
 
-                    // Add to list for display and save to Firestore
-                    pokemonList.add(pokemon);
+                    // Update the ViewModel with new Pokémon data
+                    fetchedPokemons.add(pokemon);
 
-//                    savePokemonToFirestore(pokemon);
-
-
-                    // Update RecyclerView on the main thread
-                    getActivity().runOnUiThread(() -> pokemonAdapter.notifyDataSetChanged());
-
-                    sharedViewModel.addPokemon(pokemon);
-
+                    // Update ViewModel on the main thread after adding all details
+                    getActivity().runOnUiThread(() -> {
+                        homeViewModel.setPokemonList(fetchedPokemons);
+                    });
                 }
             }
         });
     }
 
+    @Override
+    public void onPokemonClick(Pokemon pokemon) {
+        // Handle navigation to PokemonDetailsFragment, passing the selected Pokemon
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pokemon", pokemon);
 
-    private void savePokemonToFirestore(Pokemon pokemon) {
-        db.collection("pokemons").document(pokemon.getName())
-                .set(pokemon)
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Pokemon saved!"))
-                .addOnFailureListener(e -> Log.w("Firestore", "Error adding document", e));
+        // Navigate using the Navigation component
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_homeFragment_to_pokemonFragment, bundle);
     }
-
 
     @Override
     public void onDestroyView() {

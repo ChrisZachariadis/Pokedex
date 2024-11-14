@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.pokedexproject.R;
 import com.example.pokedexproject.models.Pokemon;
 import com.squareup.picasso.Picasso;
@@ -17,15 +16,24 @@ import java.util.List;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
     private List<Pokemon> pokemonList;
+    private OnPokemonClickListener onPokemonClickListener;
 
-    public PokemonAdapter(List<Pokemon> pokemonList) {
+    // Define an interface for click events
+    public interface OnPokemonClickListener {
+        void onPokemonClick(Pokemon pokemon);
+    }
+
+    // Modify the constructor to accept the click listener
+    public PokemonAdapter(List<Pokemon> pokemonList, OnPokemonClickListener listener) {
         this.pokemonList = pokemonList;
+        this.onPokemonClickListener = listener;
     }
 
     @NonNull
     @Override
     public PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemon, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_pokemon, parent, false);
         return new PokemonViewHolder(view);
     }
 
@@ -35,6 +43,13 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         holder.nameTextView.setText(pokemon.getName());
         holder.typeTextView.setText(pokemon.getType());
         Picasso.get().load(pokemon.getImageFront()).into(holder.frontImageView);
+
+        // Set up the click listener for each item
+        holder.itemView.setOnClickListener(v -> {
+            if (onPokemonClickListener != null) {
+                onPokemonClickListener.onPokemonClick(pokemon);
+            }
+        });
     }
 
     @Override

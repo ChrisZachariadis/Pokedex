@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_pokemonFragment"
-            app:destination="@id/pokemon_fragment" />
+            app:destination="@id/pokemonDetailsFragment" />
     </fragment>
 
     <fragment
@@ -28,8 +28,8 @@
         tools:layout="@layout/fragment_about_us" />
 
     <fragment
-        android:id="@+id/pokemon_fragment"
-        android:name="com.example.pokedexproject.ui.PokemonFragment"
+        android:id="@+id/pokemonDetailsFragment"
+        android:name="com.example.pokedexproject.ui.pokemonDetails.PokemonDetailsFragment"
         android:label="Pokemon Details"
         tools:layout="@layout/fragment_pokemon" />
 
