@@ -8,16 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.pokedexproject.databinding.FragmentHomeBinding;
 import com.example.pokedexproject.models.Pokemon;
+import com.example.pokedexproject.ui.shared.SharedViewModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.jetbrains.annotations.NotNull;
+//import androidx.lifecycle.ViewModelProvider;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,13 +38,24 @@ public class HomeFragment extends Fragment {
     private List<Pokemon> pokemonList = new ArrayList<>();
     private PokemonAdapter pokemonAdapter;
     private FirebaseFirestore db;
+    private SharedViewModel sharedViewModel;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        db = FirebaseFirestore.getInstance();
+        // Initialize SharedViewModel
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        // Observe the shared Pokémon list
+        sharedViewModel.getPokemonListLiveData().observe(getViewLifecycleOwner(), pokemons -> {
+            // Update your local list and notify adapter
+            pokemonList.clear();
+            pokemonList.addAll(pokemons);
+            pokemonAdapter.notifyDataSetChanged();
+        });
 
         setupRecyclerView();
         fetchPokemons();
@@ -139,10 +153,15 @@ public class HomeFragment extends Fragment {
 
                     // Add to list for display and save to Firestore
                     pokemonList.add(pokemon);
-                    savePokemonToFirestore(pokemon);
+
+//                    savePokemonToFirestore(pokemon);
+
 
                     // Update RecyclerView on the main thread
                     getActivity().runOnUiThread(() -> pokemonAdapter.notifyDataSetChanged());
+
+                    sharedViewModel.addPokemon(pokemon);
+
                 }
             }
         });

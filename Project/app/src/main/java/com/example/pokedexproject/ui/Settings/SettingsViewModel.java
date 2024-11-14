@@ -13,10 +13,7 @@ public class SettingsViewModel extends ViewModel {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public void downloadDataToFirestore() {
-        // Fetch Pokémon list from the API or any cached list (This is a placeholder)
-        List<Pokemon> pokemonList = fetchPokemonListFromAPI();
-
+    public void downloadDataToFirestore(List<Pokemon> pokemonList) {
         for (Pokemon pokemon : pokemonList) {
             db.collection("pokemons").document(pokemon.getName())
                     .set(pokemon)
