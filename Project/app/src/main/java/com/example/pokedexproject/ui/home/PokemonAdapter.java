@@ -1,5 +1,6 @@
 package com.example.pokedexproject.ui.home;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+ * Main function of pokemon adapter is to display the pokemons in a list.
+ */
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
     private List<Pokemon> pokemonList;
-    private OnPokemonClickListener onPokemonClickListener;
+    private final OnPokemonClickListener onPokemonClickListener;
 
     // Define an interface for click events
     public interface OnPokemonClickListener {
@@ -68,6 +72,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             frontImageView = itemView.findViewById(R.id.imageViewPokemonFront);
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
     public void updatePokemonList(List<Pokemon> newPokemonList) {
         this.pokemonList = newPokemonList;
         notifyDataSetChanged();
