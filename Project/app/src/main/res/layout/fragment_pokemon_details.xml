@@ -2,14 +2,19 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollViewPokemonDetails"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/pokedex_background"
+    android:paddingHorizontal="2dp"
+    android:paddingTop="110dp">
 
     <LinearLayout
         android:id="@+id/linearLayoutPokemonDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center_horizontal">
 
         <!-- Pokémon Name -->
         <TextView
@@ -17,50 +22,92 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/pokemon_red"
+            android:layout_gravity="center"
+            android:paddingBottom="16dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/dark_gray"
+            android:layout_marginVertical="12dp" />
 
         <!-- Pokémon Type -->
         <TextView
             android:id="@+id/textViewPokemonType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type" />
+            android:text="Type"
+            android:textColor="@color/dark_gray"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:paddingBottom="8dp" />
 
         <!-- Pokémon Weight -->
         <TextView
             android:id="@+id/textViewPokemonWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weight" />
+            android:text="Weight"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            android:paddingBottom="8dp" />
 
         <!-- Pokémon Height -->
         <TextView
             android:id="@+id/textViewPokemonHeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Height" />
+            android:text="Height"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            android:paddingBottom="8dp" />
 
         <!-- Base Experience -->
         <TextView
             android:id="@+id/textViewPokemonBaseExperience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Base Experience" />
+            android:text="Base Experience"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            android:paddingBottom="16dp" />
 
-        <!-- Front Image -->
-        <ImageView
-            android:id="@+id/imageViewPokemonFront"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp" />
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/dark_gray"
+            android:layout_marginVertical="12dp" />
 
-        <!-- Back Image -->
-        <ImageView
-            android:id="@+id/imageViewPokemonBack"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp" />
+        <!-- Image Layout (Front and Back Images Side by Side) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <!-- Front Image -->
+            <ImageView
+                android:id="@+id/imageViewPokemonFront"
+                android:layout_width="20dp"
+                android:layout_height="250dp"
+            android:layout_weight="1"
+            android:layout_gravity="center" />
+
+            <!-- Back Image -->
+            <ImageView
+                android:id="@+id/imageViewPokemonBack"
+                android:layout_width="20dp"
+                android:layout_height="250dp"
+            android:layout_weight="1"
+            android:layout_gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

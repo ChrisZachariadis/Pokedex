@@ -1,5 +1,6 @@
 package com.example.pokedexproject.ui.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class PokemonFragment extends Fragment {
         return root;
     }
 
+    @SuppressLint("SetTextI18n")
     private void displayPokemonDetails(Pokemon pokemon) {
         nameTextView.setText(pokemon.getName());
         typeTextView.setText("Type: " + pokemon.getType());
