@@ -19,4 +19,13 @@
     <string name="arrow"><![CDATA[>]]></string>
     <string name="type">Type</string>
     <string name="name">Name</string>
+    <string name="settings">Settings</string>
+    <string name="about_us">About Us</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="base_experience">Base Experience</string>
+    <string name="moves">Moves</string>
+    <string name="held_items">Held Items</string>
+    <string name="pokemon_front_image">pokemon_front_image</string>
+    <string name="pokemon_back_image">pokemon_back_image</string>
 </resources>

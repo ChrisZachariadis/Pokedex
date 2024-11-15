@@ -16,7 +16,6 @@
         android:layout_margin="16dp"
         android:layout_gravity="center_horizontal">
 
-        <!-- Pokémon Name -->
         <TextView
             android:id="@+id/textViewPokemonName"
             android:layout_width="wrap_content"
@@ -26,16 +25,14 @@
             android:textStyle="bold"
             android:textColor="@color/pokemon_red"
             android:layout_gravity="center"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp" />
 
-        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/dark_gray"
-            android:layout_marginVertical="12dp" />
+            android:layout_marginVertical="8dp" />
 
-        <!-- Pokémon Type -->
         <TextView
             android:id="@+id/textViewPokemonType"
             android:layout_width="wrap_content"
@@ -43,47 +40,69 @@
             android:text="Type"
             android:textColor="@color/dark_gray"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:paddingBottom="8dp" />
 
-        <!-- Pokémon Weight -->
+        <TextView
+            android:id="@+id/textViewPokemonAbilities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Abilities"
+            android:textColor="@color/dark_gray"
+            android:textSize="19sp"
+            android:paddingBottom="8dp" />
+
         <TextView
             android:id="@+id/textViewPokemonWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weight"
+            android:text="@string/weight"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:paddingBottom="8dp" />
 
-        <!-- Pokémon Height -->
         <TextView
             android:id="@+id/textViewPokemonHeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Height"
+            android:text="@string/height"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:paddingBottom="8dp" />
 
-        <!-- Base Experience -->
+        <TextView
+            android:id="@+id/textViewPokemonHeldItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/held_items"
+            android:textColor="@color/dark_gray"
+            android:textSize="19sp"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textViewPokemonMoves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moves"
+            android:textColor="@color/dark_gray"
+            android:textSize="19sp"
+            android:paddingBottom="8dp" />
+
         <TextView
             android:id="@+id/textViewPokemonBaseExperience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Base Experience"
+            android:text="@string/base_experience"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp"
+            android:textSize="19sp"
             android:paddingBottom="16dp" />
 
-        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/dark_gray"
-            android:layout_marginVertical="12dp" />
+            android:layout_marginVertical="8dp" />
 
-        <!-- Image Layout (Front and Back Images Side by Side) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,21 +110,21 @@
             android:gravity="center"
             android:layout_marginTop="16dp">
 
-            <!-- Front Image -->
             <ImageView
                 android:id="@+id/imageViewPokemonFront"
                 android:layout_width="20dp"
-                android:layout_height="250dp"
-            android:layout_weight="1"
-            android:layout_gravity="center" />
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:contentDescription="@string/pokemon_front_image" />
 
-            <!-- Back Image -->
             <ImageView
                 android:id="@+id/imageViewPokemonBack"
                 android:layout_width="20dp"
-                android:layout_height="250dp"
-            android:layout_weight="1"
-            android:layout_gravity="center" />
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:contentDescription="@string/pokemon_back_image" />
 
         </LinearLayout>
 
