@@ -34,9 +34,4 @@ public class SettingsViewModel extends ViewModel {
         });
     }
 
-    // Placeholder method to fetch Pokémon list
-    private List<Pokemon> fetchPokemonListFromAPI() {
-        // Implement the logic to get Pokémon data, possibly cached in HomeViewModel
-        return null;
-    }
 }

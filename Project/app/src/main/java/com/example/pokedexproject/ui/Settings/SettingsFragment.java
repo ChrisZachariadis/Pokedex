@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pokedexproject.R;
 import com.example.pokedexproject.databinding.FragmentSettingsBinding;
 import com.example.pokedexproject.models.Pokemon;
 import com.example.pokedexproject.ui.shared.SharedViewModel;
@@ -37,8 +36,6 @@ public class SettingsFragment extends Fragment {
         // Load image into ImageView using Picasso
         Picasso.get()
                 .load(IMAGE_URL)
-//                .placeholder(R.drawable.ic_placeholder_image) // Set a placeholder image (optional)
-//                .error(R.drawable.ic_error_image) // Set an error image (optional)
                 .into(binding.imagePlaceholder);
 
         // Set up Download button
