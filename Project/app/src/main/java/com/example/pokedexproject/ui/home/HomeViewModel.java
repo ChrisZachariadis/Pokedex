@@ -29,7 +29,7 @@ public class HomeViewModel extends ViewModel {
 
     public void fetchPokemons(OnPokemonsFetchedListener listener) {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://pokeapi.co/api/v2/pokemon/?limit=10";
+        String url = "https://pokeapi.co/api/v2/pokemon/?limit=50";
 
         Request request = new Request.Builder()
                 .url(url)
