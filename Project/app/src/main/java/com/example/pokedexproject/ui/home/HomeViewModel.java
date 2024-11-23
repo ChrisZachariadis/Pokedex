@@ -31,9 +31,7 @@ public class HomeViewModel extends ViewModel {
         OkHttpClient client = new OkHttpClient();
         String url = "https://pokeapi.co/api/v2/pokemon/?limit=50";
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+        Request request = new Request.Builder().url(url).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -48,6 +46,7 @@ public class HomeViewModel extends ViewModel {
                     JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
                     JsonArray results = jsonObject.getAsJsonArray("results");
 
+                    // List containing all the fetched pokemons, then calls Fetch PokemonDetails for each pokemon.
                     List<Pokemon> fetchedPokemons = new ArrayList<>();
                     for (int i = 0; i < results.size(); i++) {
                         JsonObject pokemonObject = results.get(i).getAsJsonObject();
@@ -78,8 +77,7 @@ public class HomeViewModel extends ViewModel {
 
                     String frontImage = details.getAsJsonObject("sprites").get("front_default").getAsString();
                     String backImage = details.getAsJsonObject("sprites").get("back_default").getAsString();
-                    String type = details.getAsJsonArray("types").get(0).getAsJsonObject()
-                            .getAsJsonObject("type").get("name").getAsString();
+                    String type = details.getAsJsonArray("types").get(0).getAsJsonObject().getAsJsonObject("type").get("name").getAsString();
                     int weight = details.get("weight").getAsInt();
                     int height = details.get("height").getAsInt();
                     int baseExperience = details.get("base_experience").getAsInt();
@@ -88,8 +86,7 @@ public class HomeViewModel extends ViewModel {
                     List<String> heldItems = parseDetailsArray(details.getAsJsonArray("held_items"), "item");
                     List<String> moves = parseDetailsArray(details.getAsJsonArray("moves"), "move");
 
-                    Pokemon pokemon = new Pokemon(name, type, abilities, weight, height, heldItems, moves,
-                            baseExperience, frontImage, backImage);
+                    Pokemon pokemon = new Pokemon(name, type, abilities, weight, height, heldItems, moves, baseExperience, frontImage, backImage);
 
                     fetchedPokemons.add(pokemon);
 
@@ -101,6 +98,7 @@ public class HomeViewModel extends ViewModel {
         });
     }
 
+    // Extracts specific details from a JSON array.
     private List<String> parseDetailsArray(JsonArray jsonArray, String key) {
         List<String> resultList = new ArrayList<>();
         if (jsonArray != null) {

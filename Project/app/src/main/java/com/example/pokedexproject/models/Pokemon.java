@@ -33,14 +33,43 @@ public class Pokemon implements Serializable {
     }
 
     // Getters
-    public String getName() { return name; }
-    public String getType() { return type; }
-    public List<String> getAbilities() { return abilities; }
-    public int getWeight() { return weight; }
-    public int getHeight() { return height; }
-    public List<String> getHeldItems() { return heldItems; }
-    public List<String> getMoves() { return moves; }
-    public int getBaseExperience() { return baseExperience; }
-    public String getImageFront() { return imageFront; }
-    public String getImageBack() { return imageBack; }
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public List<String> getAbilities() {
+        return abilities;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public List<String> getHeldItems() {
+        return heldItems;
+    }
+
+    public List<String> getMoves() {
+        return moves;
+    }
+
+    public int getBaseExperience() {
+        return baseExperience;
+    }
+
+    public String getImageFront() {
+        return imageFront;
+    }
+
+    public String getImageBack() {
+        return imageBack;
+    }
 }

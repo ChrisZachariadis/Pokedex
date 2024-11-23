@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.pokedexproject.R;
 import com.example.pokedexproject.models.Pokemon;
 import com.squareup.picasso.Picasso;
@@ -36,8 +37,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
     @NonNull
     @Override
     public PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_pokemon, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemon, parent, false);
         return new PokemonViewHolder(view);
     }
 
@@ -72,6 +72,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             frontImageView = itemView.findViewById(R.id.imageViewPokemonFront);
         }
     }
+
     @SuppressLint("NotifyDataSetChanged")
     public void updatePokemonList(List<Pokemon> newPokemonList) {
         this.pokemonList = newPokemonList;

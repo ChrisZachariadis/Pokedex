@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
+// Download and delete logic for Firestore
 public class SettingsViewModel extends ViewModel {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();

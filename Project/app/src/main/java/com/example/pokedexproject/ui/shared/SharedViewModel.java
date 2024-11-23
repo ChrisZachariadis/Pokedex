@@ -9,6 +9,7 @@ import com.example.pokedexproject.models.Pokemon;
 import java.util.ArrayList;
 import java.util.List;
 
+// HomeViewModel fetches the pokemons (API call) and passes the data to the SharedViewModel
 public class SharedViewModel extends ViewModel {
 
     private final MutableLiveData<List<Pokemon>> pokemonListLiveData = new MutableLiveData<>(new ArrayList<>());

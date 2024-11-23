@@ -16,10 +16,8 @@ public class AboutUsFragment extends Fragment {
 
     private FragmentAboutUsBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        AboutUsViewModel aboutUsViewModel =
-                new ViewModelProvider(this).get(AboutUsViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        AboutUsViewModel aboutUsViewModel = new ViewModelProvider(this).get(AboutUsViewModel.class);
 
         binding = FragmentAboutUsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

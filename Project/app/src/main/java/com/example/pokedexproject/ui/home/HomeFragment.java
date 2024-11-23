@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment implements PokemonAdapter.OnPokemonCl
 
     private void fetchPokemons() {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        // Pass the fetched Pokémon list to SharedViewModel
         homeViewModel.fetchPokemons(pokemons -> sharedViewModel.setPokemonList(pokemons));
     }
 
@@ -63,8 +64,7 @@ public class HomeFragment extends Fragment implements PokemonAdapter.OnPokemonCl
         Bundle bundle = new Bundle();
         bundle.putSerializable("pokemon", pokemon);
 
-        Navigation.findNavController(requireView())
-                .navigate(R.id.action_homeFragment_to_pokemonFragment, bundle);
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_pokemonFragment, bundle);
     }
 
     @Override

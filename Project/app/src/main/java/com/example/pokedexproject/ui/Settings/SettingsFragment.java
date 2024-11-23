@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+// Fetches the pokemon list from SharedViewModel to store in firestore
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
@@ -34,9 +35,7 @@ public class SettingsFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         // Load image into ImageView using Picasso
-        Picasso.get()
-                .load(IMAGE_URL)
-                .into(binding.imagePlaceholder);
+        Picasso.get().load(IMAGE_URL).into(binding.imagePlaceholder);
 
         // Set up Download button
         binding.buttonDownload.setOnClickListener(v -> {
